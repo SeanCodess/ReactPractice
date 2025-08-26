@@ -1,5 +1,12 @@
-function ListGroup() {
-  let cities = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
+import { useState } from "react";
+
+interface Props {
+  cities: string[];
+  heading: string;
+}
+
+function ListGroup({ cities, heading }: Props) {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const getMessage = () => {
     cities.length === 0 ? <p>No cities found</p> : null;
@@ -7,15 +14,22 @@ function ListGroup() {
 
   return (
     <>
-      <h1>Cities</h1>
+      <h1>{heading}</h1>
       {getMessage()}
       <ul className="list-group">
-        {cities.map((city) => (
-          <li className="list-group-item" key={city}>
+        {cities.map((city, index) => (
+          <li
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={city}
+            onClick={() => setSelectedIndex(index)}
+          >
             {city}
           </li>
         ))}
-        ;
       </ul>
     </>
   );
