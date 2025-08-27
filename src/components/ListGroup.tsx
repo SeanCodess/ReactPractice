@@ -1,20 +1,26 @@
 import { useState } from "react";
+import "./ListGroup.css";
 
 interface Props {
   cities: string[];
   heading: string;
+  onSelectedCity?: (city: string) => void;
 }
 
-function ListGroup({ cities, heading }: Props) {
+function ListGroup({ cities, heading, onSelectedCity }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const getMessage = () => {
-    cities.length === 0 ? <p>No cities found</p> : null;
+    return cities.length === 0 ? (
+      <ul className="list-group">
+        <li className="list-group-item">No cities found</li>
+      </ul>
+    ) : null;
   };
 
   return (
     <>
-      <h1>{heading}</h1>
+      <h1 className="listgroup-heading">{heading}</h1>
       {getMessage()}
       <ul className="list-group">
         {cities.map((city, index) => (
@@ -25,7 +31,11 @@ function ListGroup({ cities, heading }: Props) {
                 : "list-group-item"
             }
             key={city}
-            onClick={() => setSelectedIndex(index)}
+            onClick={() => {
+              setSelectedIndex(index);
+              if (onSelectedCity) onSelectedCity(city);
+            }}
+            style={{ cursor: "pointer" }}
           >
             {city}
           </li>
