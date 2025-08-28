@@ -1,5 +1,7 @@
 /* Container */
 .container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 2rem;
   font-family: Arial, sans-serif;
   color: #333;
@@ -7,16 +9,18 @@
 
 /* Headings */
 .title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 2rem;
 }
 
 .subtitle {
   font-size: 1.25rem;
   margin-bottom: 1rem;
+  color: #555;
 }
 
 /* Buttons */
@@ -70,7 +74,7 @@
 .card {
   border: 1px solid #e5e7eb;
   padding: 1.5rem;
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   border-radius: 12px;
   background: white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -80,7 +84,7 @@
 .form-row {
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 select,
@@ -93,6 +97,17 @@ input {
 }
 
 /* City list */
+.city-section {
+  margin-top: 1.5rem;
+}
+
+.city-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #374151;
+}
+
 .city-list {
   list-style: none;
   padding: 0;
@@ -105,7 +120,7 @@ input {
   align-items: center;
   background: #f9fafb;
   padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   border-radius: 8px;
   box-shadow: inset 0 0 0 1px #e5e7eb;
 }
@@ -118,5 +133,6 @@ input {
   background: #fef3c7;
   color: #92400e;
   font-weight: 500;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #fde68a;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }

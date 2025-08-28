@@ -1,7 +1,9 @@
 import { useState } from "react";
-import Alert from "./components/Alert";
 import ListGroup from "./components/ListGroup";
+import Alert from "./components/Alert";
 import "./App.css";
+import Button from "./components/Button";
+import ChangeWorld from "./components/ChangeWorld";
 
 function App() {
   let [citiesUS, setCitiesUS] = useState([
@@ -27,29 +29,28 @@ function App() {
     console.log(city);
   };
 
-  const [selectedCountry, setSelectedCountry] = useState("US");
-  const [cityInput, setCityInput] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<
+    "US" | "PH" | "Skosia"
+  >("US");
+  const [showChangeWorld, setShowChangeWorld] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
-  const [showChangeWorld, setShowChangeWorld] = useState(false);
 
-  const handleAddCity = () => {
-    if (!cityInput.trim()) return;
-    if (selectedCountry === "US") {
-      setCitiesUS([...citiesUS, cityInput]);
-    } else if (selectedCountry === "PH") {
-      setCitiesPH([...citiesPH, cityInput]);
-    } else if (selectedCountry === "Skosia") {
-      setCitiesSkosia([...citiesSkosia, cityInput]);
+  //handle add city
+  const handleAddCity = (country: "US" | "PH" | "Skosia", city: string) => {
+    if (country === "US") {
+      setCitiesUS([...citiesUS, city]);
+    } else if (country === "PH") {
+      setCitiesPH([...citiesPH, city]);
+    } else if (country === "Skosia") {
+      setCitiesSkosia([...citiesSkosia, city]);
     }
     setAlertMsg("New city generated!");
-    setCityInput("");
     setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
+    setTimeout(() => setShowAlert(false), 2000);
   };
 
+  //handle remove city
   const handleRemoveCity = (country: string, city: string) => {
     if (country === "US") {
       setCitiesUS(citiesUS.filter((c) => c !== city));
@@ -58,6 +59,10 @@ function App() {
     } else if (country === "Skosia") {
       setCitiesSkosia(citiesSkosia.filter((c) => c !== city));
     }
+
+    setAlertMsg("Something happened!");
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 2000);
   };
 
   return (
@@ -72,59 +77,21 @@ function App() {
         </button>
       </h1>
 
-      {showAlert && <div className="alert">{alertMsg}</div>}
-
       {showChangeWorld && (
-        <div className="card">
-          <h2 className="subtitle">Change World</h2>
-
-          <div className="form-row">
-            <select
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
-            >
-              <option value="US">US</option>
-              <option value="PH">Philippines</option>
-              <option value="Skosia">Skosia</option>
-            </select>
-
-            <input
-              type="text"
-              value={cityInput}
-              onChange={(e) => setCityInput(e.target.value)}
-              placeholder="Name your new city"
-            />
-
-            <button onClick={handleAddCity} className="btn success">
-              Add City
-            </button>
-          </div>
-
-          <ul className="city-list">
-            {(selectedCountry === "US"
-              ? citiesUS
-              : selectedCountry === "PH"
-              ? citiesPH
-              : citiesSkosia
-            ).map((city) => (
-              <li key={city} className="city-item">
-                <span>{city}</span>
-                <button
-                  className="btn danger small"
-                  onClick={() => {
-                    handleRemoveCity(selectedCountry, city);
-                    setAlertMsg("Something happened!");
-                    setShowAlert(true);
-                    setTimeout(() => setShowAlert(false), 2000);
-                  }}
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ChangeWorld
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+          onAddCity={handleAddCity}
+          onRemoveCity={handleRemoveCity}
+          citiesUS={citiesUS}
+          citiesPH={citiesPH}
+          citiesSkosia={citiesSkosia}
+          onClose={() => setShowChangeWorld(false)}
+        />
       )}
+
+      {showAlert && <Alert>{alertMsg}</Alert>}
+
       <ListGroup
         cities={citiesUS ?? []}
         heading="  Cities in the US"
