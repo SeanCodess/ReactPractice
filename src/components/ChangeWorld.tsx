@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 interface Props {
   selectedCountry: "US" | "PH" | "Skosia";
@@ -9,6 +10,7 @@ interface Props {
   citiesPH: string[];
   citiesSkosia: string[];
   onClose: () => void;
+  onShowAlert: (message: string) => void;
 }
 
 function ChangeWorld({
@@ -20,6 +22,7 @@ function ChangeWorld({
   citiesPH,
   citiesSkosia,
   onClose,
+  onShowAlert,
 }: Props) {
   const [changeWorldAction, setChangeWorldAction] = useState<
     "add" | "remove" | null
@@ -45,6 +48,7 @@ function ChangeWorld({
           >
             Remove City
           </button>
+          <Button onClick={() => onShowAlert("Time Travel not yet iNVǝntE̸D̶")} />
           <button
             className="btn btn-secondary"
             onClick={() => {
@@ -64,7 +68,9 @@ function ChangeWorld({
           {/* Country Dropdown */}
           <select
             value={selectedCountry}
-            onChange={(e) => setSelectedCountry(e.target.value)}
+            onChange={(e) =>
+              setSelectedCountry(e.target.value as "US" | "PH" | "Skosia")
+            }
           >
             <option value="US">US</option>
             <option value="PH">Philippines</option>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import ListGroup from "./components/ListGroup";
 import Alert from "./components/Alert";
 import "./App.css";
-import Button from "./components/Button";
 import ChangeWorld from "./components/ChangeWorld";
 
 function App() {
@@ -71,7 +70,14 @@ function App() {
         My World
         <button
           className="btn primary"
-          onClick={() => setShowChangeWorld((prev) => !prev)}
+          onClick={() => {
+            if (!showChangeWorld) {
+              setAlertMsg("Change World panel opened!");
+              setShowAlert(true);
+              setTimeout(() => setShowAlert(false), 2000);
+            }
+            setShowChangeWorld((prev) => !prev);
+          }}
         >
           Change World
         </button>
@@ -87,6 +93,11 @@ function App() {
           citiesPH={citiesPH}
           citiesSkosia={citiesSkosia}
           onClose={() => setShowChangeWorld(false)}
+          onShowAlert={(msg) => {
+            setAlertMsg(msg);
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 2000);
+          }}
         />
       )}
 

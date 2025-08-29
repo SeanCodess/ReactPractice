@@ -13,7 +13,7 @@ function ListGroup({ cities, heading, onSelectedCity }: Props) {
   const getMessage = () => {
     return cities.length === 0 ? (
       <ul className="list-group">
-        <li className="list-group-item">No cities found</li>
+        <li className="list-group-item">No cities yet</li>
       </ul>
     ) : null;
   };
